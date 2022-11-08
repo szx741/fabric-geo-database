@@ -1,0 +1,47 @@
+name: Fabric test
+version: "2.0.0"
+
+caliper:
+  blockchain: fabric
+
+info:
+  Version: 2.3.2
+  Size: 2 Orgs
+  Orderer: Raft
+  Distribution: Single Host
+  StateDB: CouchDB
+
+channels:
+  - channelName: mychannel
+    contracts:
+    - id: geo
+
+organizations:
+  - mspid: Org1MSP
+    identities:
+      certificates:
+      - name: 'Org1MSPuser1'
+        clientPrivateKey:
+          path: '../../test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/priv_sk'
+        clientSignedCert:
+          path: '../../test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem'
+    connectionProfile:
+      path: '../organization/digibank/gateway/connection-org1.yaml'
+      discover: true
+
+  - mspid: Org2MSP
+    identities:
+      certificates:
+      - name: 'Org2MSPuser1'
+        clientPrivateKey:
+          path: '../../test-network/organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/keystore/priv_sk'
+        clientSignedCert:
+          path: '../../test-network/organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/signcerts/User1@org2.example.com-cert.pem'
+      - name: 'Org2MSPuser2'
+        clientPrivateKey:
+          path: '../../test-network/organizations/peerOrganizations/org2.example.com/users/User2@org2.example.com/msp/keystore/priv_sk'
+        clientSignedCert:
+          path: '../../test-network/organizations/peerOrganizations/org2.example.com/users/User2@org2.example.com/msp/signcerts/User2@org2.example.com-cert.pem'
+    connectionProfile:
+      path: '../organization/magnetocorp/gateway/connection-org2.yaml'
+      discover: true

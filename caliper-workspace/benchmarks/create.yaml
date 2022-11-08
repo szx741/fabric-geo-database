@@ -1,0 +1,86 @@
+# https://hyperledger.github.io/caliper/v0.4.2/bench-config/
+# https://hyperledger.github.io/caliper/v0.4.2/rate-controllers/
+test:
+  name: geo-contract-benchmark
+  description: test benchmark
+  workers:
+    type: local
+    number: 20
+  rounds:
+    - label: create
+      description: create geojson
+      txDuration: 1
+      rateControl:
+        # type: fixed-rate
+        # opts:
+        #   tps: 100
+
+        type: fixed-load
+        opts:
+          transactionLoad: 2
+      workload:
+        module: workload/create.js
+        arguments:
+          objects: 1
+          count: 500
+          contractId: geo
+# observer:
+#   type: prometheus
+#   interval: 5
+# monitors:
+#   transaction:
+# 这玩意儿不能开啊，要不然速度直线下降
+#   - module: prometheus-push
+#     options:
+#       pushInterval: 5
+#       pushUrl: "http://localhost:9091"
+# monitors:
+#     resource:
+#     - module: prometheus
+#       options:
+#         url: "http://localhost:9090"
+#         metrics:
+#           include: [dev-.*, couch, peer, orderer]
+#           queries:
+#           - name: Avg Memory (MB)
+#             query: 'sum(container_memory_rss{name=~".+"}) by (name)'
+#             step: 10
+#             label: name
+#             statistic: avg
+#             multiplier: 0.000001
+#           - name:   CPU (%)
+#             query: sum(rate(container_cpu_usage_seconds_total{name=~".+"}[1m])) by (name)
+#             step: 10
+#             label: name
+#             statistic: avg
+#             multiplier: 100
+#           - name: Network In (MB)
+#             query: sum(rate(container_network_receive_bytes_total{name=~".+"}[1m])) by (name)
+#             step: 10
+#             label: name
+#             statistic: sum
+#             multiplier: 0.000001
+#           - name: Network Out (MB)
+#             query: sum(rate(container_network_transmit_bytes_total{name=~".+"}[1m])) by (name)
+#             step: 10
+#             label: name
+#             statistic: sum
+#             multiplier: 0.000001
+#           - name: Disc Write (MB)
+#             query: sum(rate(container_fs_writes_bytes_total{name=~".+"}[1m])) by (name)
+#             step: 10
+#             label: name
+#             statistic: sum
+#             multiplier: 0.000001
+#           - name: Disc Read (MB)
+#             query: sum(rate(container_fs_reads_bytes_total{name=~".+"}[1m])) by (name)
+#             step: 10
+#             label: name
+#             statistic: sum
+#             multiplier: 0.000001
+# monitors:
+#   transaction:
+#   - module: prometheus-push
+#     options:
+#       pushInterval: 5
+#       pushUrl: "http://localhost:9091"

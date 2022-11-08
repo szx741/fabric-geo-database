@@ -1,0 +1,59 @@
+{
+    "name": "geo-ts",
+    "version": "0.0.1",
+    "description": "Hyperledger Fabric about geo Contract",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "engines": {
+        "node": ">=12",
+        "npm": ">=5"
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "nyc mocha test --recursive",
+        "start": "fabric-chaincode-node start",
+        "mocha": "mocha test --recursive",
+        "build": "tsc",
+        "build:watch": "tsc -w",
+        "prepublishOnly": "npm run build",
+        "build:ol": "cp -r node_modules/@types/ol . && npx tsc --build tsconfig.openlayer.json && rm -rf ol/src"
+    },
+    "engineStrict": true,
+    "author": "szx",
+    "dependencies": {
+        "fabric-contract-api": "^2.2.2",
+        "fabric-shim": "^2.2.2",
+        "nano": "^9.0.5",
+        "pg": "^8.7.1"
+    },
+    "devDependencies": {
+        "@types/node": "^16.11.6",
+        "@types/pg": "^8.6.1",
+        "@typescript-eslint/eslint-plugin": "^5.2.0",
+        "@typescript-eslint/parser": "^5.2.0",
+        "eslint": "^5.16.0",
+        "nyc": "^15.1.0",
+        "typescript": "^4.4.4"
+    },
+    "nyc": {
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
+        "exclude": [
+            "coverage/**",
+            "test/**"
+        ],
+        "reporter": [
+            "text-summary",
+            "html"
+        ],
+        "all": true,
+        "check-coverage": true,
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+    }
+}
